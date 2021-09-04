@@ -3,10 +3,10 @@ import random
 
 
 class Shop(object):
-    def __init__(self):
+    def __init__(self, ban_type=random.sample(TYPE_LIST, 3)):
         self.tier = 1
-        self.increase_level_coin = TIER_COIN[self.tier]
-        self.banned_type()
+        self.upgrade_cost = TIER_COIN[self.tier]
+        self.banned_type(ban_type)
         self.reroll_minion()
         self.is_freeze = False
 
@@ -16,15 +16,17 @@ class Shop(object):
     def unfreeze(self):
         self.is_freeze = False
 
-    def decrease_level_coin(self):
-        self.increase_level_coin -= 1
-        if self.increase_level_coin < 0:
-            self.increase_level_coin = 0
+    def decrease_cost(self):
+        self.upgrade_cost -= 1
+        if self.upgrade_cost < 0:
+            self.upgrade_cost = 0
 
-    def banned_type(self):
-        self.ban_type = random.sample(TYPE_LIST, 3)
+    def banned_type(self, ban_type):
+        self.ban_type = ban_type
         self.allow_type = {
-            type: TYPE_MATCHER[type] for type in TYPE_MATCHER if type not in self.ban_type
+            type: TYPE_MATCHER[type]
+            for type in TYPE_MATCHER
+            if type not in self.ban_type
         }
 
     def get_accessible_minion(self):
@@ -52,23 +54,33 @@ class Shop(object):
         self.increase_level_coin = TIER_COIN[self.tier]
 
     def turn_end(self):
-        self.decrease_level_coin()
+        self.decrease_cost()
 
         if self.is_freeze == True:
             self.unfreeze()
         else:
             self.reroll_minion()
 
+    def get_upgrade_cost(self):
+        return self.upgrade_cost
+
+    def show_shop_info(self):
+        return f"Tier: {self.tier}, Upgrade Cost: {self.upgrade_cost}\nSelling Minion: {self.available_minion}"
+
     def __str__(self):
-        return f"Tier: {self.tier}, \n" + \
-            f"Pay for Next Level: {self.increase_level_coin}\n" + \
-            f"Banned Type: {self.ban_type}\n" + \
-            f"Allowed Type: {list(self.allow_type.keys())}\n" + \
-            f"Available Minion: {self.available_minion}"
+        return (
+            f"Tier: {self.tier}, \n"
+            + f"Pay for Next Level: {self.upgrade_cost}\n"
+            + f"Banned Type: {self.ban_type}\n"
+            + f"Allowed Type: {list(self.allow_type.keys())}\n"
+            + f"Available Minion: {self.available_minion}"
+        )
 
     def __repr__(self):
-        return f"Tier: {self.tier}, \n" + \
-            f"Pay for Next Level: {self.increase_level_coin}\n" + \
-            f"Banned Type: {self.ban_type}\n" + \
-            f"Allowed Type: {list(self.allow_type.keys())}\n" + \
-            f"Available Minion: {self.available_minion}"
+        return (
+            f"Tier: {self.tier}, \n"
+            + f"Pay for Next Level: {self.upgrade_cost}\n"
+            + f"Banned Type: {self.ban_type}\n"
+            + f"Allowed Type: {list(self.allow_type.keys())}\n"
+            + f"Available Minion: {self.available_minion}"
+        )

@@ -1,28 +1,27 @@
+from __future__ import annotations
 import random
 
 
 class Card(object):
-    def __init__(
-        self
-    ):
+    def __init__(self):
         self.reset()
         self.set_dict = {
-            'attack': self.set_attack,
-            'health': self.set_health,
-            'tier': self.set_tier,
-            'taunt': self.set_taunt,
-            'divine_shield': self.set_divine_shield,
-            'windfury': self.set_windfury,
-            'reborn': self.set_reborn,
-            'frenzy': self.set_frenzy,
-            'poison': self.set_poison,
-            'avenge': self.set_avenge,
+            "attack": self.set_attack,
+            "health": self.set_health,
+            "tier": self.set_tier,
+            "taunt": self.set_taunt,
+            "divine_shield": self.set_divine_shield,
+            "windfury": self.set_windfury,
+            "reborn": self.set_reborn,
+            "frenzy": self.set_frenzy,
+            "poison": self.set_poison,
+            "avenge": self.set_avenge,
         }
 
     def reset(self):
-        self.type = 'None'
-        self.name = 'None'
-        self.self.name_eng = 'None'
+        self.type = "None"
+        self.name = "None"
+        self.name_eng = "None"
         self.text = ""
         self.attack = 1
         self.health = 1
@@ -44,15 +43,15 @@ class Card(object):
     def set_death_rattle_list(self) -> list:
         return list()
 
-    def when_lose_ds(self, mine, opponent, targeted):
+    def when_lose_ds(self, mine, opponent, targeted: Card):
         """아군 하수인이 천상의 보호막을 잃은 후에"""
         pass
 
-    def when_targeted(self, mine, opponent, targeted):
+    def when_targeted(self, mine, opponent, targeted: Card):
         """아군 하수인이 공격 할 때"""
         pass
 
-    def when_dead(self, mine, opponent, dead):
+    def when_dead(self, mine, opponent, dead: Card):
         """아군 하수인이 죽은 후에"""
         pass
 
@@ -66,27 +65,39 @@ class Card(object):
     def get_name(self):
         return self.name
 
-    def lose_health(self, attacker, mine, opponent):
-        mine.trigger_targeted(opponent, self)
+    def battle(self, target, mine, opponent):
+        opponent.trigger_targeted(mine, target)
 
+        target.lose_health(self, opponent, mine)
+        self.lose_health(target, mine, opponent)
+
+        self.trigger_dead(mine, opponent)
+        target.trigger_dead(opponent, mine)
+
+    def trigger_dead(self, mine, opponent):
+        if self.live == False:
+            self.trigger_death_rattle(mine, opponent)
+            mine.trigger_dead(opponent, self)
+
+            if self.reborn == True:
+                self.reset()
+                self.health = 1
+                self.reborn = False
+
+    def lose_health(self, attacker, mine, opponent):
         if self.divine_shield == True:
             self.divine_shield = False
             mine.trigger_lose_ds(opponent, self)
         else:
-            if attacker.is_poison() == True:
+            if type(attacker) == int:
+                self.health -= attacker
+            elif attacker.is_poison() == True:
                 self.health = 0
             else:
                 self.health -= attacker.get_attack()
 
             if self.health <= 0:
                 self.live = False
-                self.trigger_death_rattle(mine, opponent)
-                mine.trigger_dead(opponent, self)
-
-                if self.reborn == True:
-                    self.reset()
-                    self.health = 1
-                    self.reborn = False
             else:
                 if self.frenzy == True:
                     self.trigger_frenzy(self)
@@ -176,6 +187,16 @@ class Card(object):
     def trigger_death_rattle(self, mine, opponent):
         for death_rattle in self.death_rattle_list:
             death_rattle(mine, opponent)
+
+    def trigger_before_battle_cry(self, mine, index):
+        pass
+
+    def trigger_after_battle_cry(self, mine):
+        pass
+
+    def trigger_start_of_combat(self, mine, opponent):
+        """기선 제압: 전투 시작 전에 한 번 효과 발동"""
+        pass
 
     def __str__(self):
         return f"<Name: {self.name}, Type: {self.type}, Attack: {self.attack}, Health: {self.health}, Text: {self.text}>\n"

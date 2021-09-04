@@ -1,6 +1,3 @@
-from ..board import Player
-from ..card import Card
-from typing import List, Tuple
 import random
 import math
 
@@ -8,8 +5,8 @@ import math
 class BattleSimulator(object):
     def __init__(
         self,
-        mine: Player,
-        opponent: Player,
+        mine,
+        opponent,
     ):
         self.players = [mine, opponent]
         self.turn = 0
@@ -31,6 +28,13 @@ class BattleSimulator(object):
         previous_attacked = [-1, -1]
         battle_log = str()
 
+        self.players[attacker_index].trigger_start_of_combat(
+            self.players[shielder_index]
+        )
+        self.players[shielder_index].trigger_start_of_combat(
+            self.players[attacker_index]
+        )
+
         while math.prod([player.get_live_card_num() for player in self.players]) > 0:
             attack_player, shield_player = (
                 self.players[attacker_index],
@@ -44,9 +48,7 @@ class BattleSimulator(object):
                 previous_attacked[attacker_index],
             )
             target_card = self.possible_target_to_attack(shield_player)
-
-            target_card.lose_health(attack_card, shield_player, attack_player)
-            attack_card.lose_health(target_card, attack_player, shield_player)
+            attack_card.battle(target_card, attack_player, shield_player)
 
             battle_log += self.write_battle_log(
                 attack_player, shield_player, attack_card, target_card
@@ -62,13 +64,15 @@ class BattleSimulator(object):
             Result=result,
             Damage=damage,
             BattleLog=battle_log,
+            UserCard=self.players[0].get_card_list(),
+            OpponentCard=self.players[1].get_card_list(),
             Turn=self.turn,
         )
         return self.get_result()
 
     def possible_target_to_attack(
         self,
-        shield_player: Player,
+        shield_player,
     ):
         """도발 하수인이 있다면 도발 하수인을 우선적으로 공격함"""
         if shield_player.get_taunt_live_card_num() > 0:
@@ -79,9 +83,9 @@ class BattleSimulator(object):
 
     def select_attackable_minion(
         self,
-        attack_player: Player,
+        attack_player,
         previous_index: int,
-    ) -> Tuple[Card, int]:
+    ):
         """공격권을 가지는 하수인 선택하기
         Attack[attack_person]은 공격을 할 수 있는 하수인을 의미
         이전에 공격한 하수인은 다시 공격할 수 없으며
@@ -98,7 +102,7 @@ class BattleSimulator(object):
 
     def judge_who_win(
         self,
-        players: List[Player],
+        players,
     ):
         if players[0].get_live_card_num() > 0:
             return "Win", players[0].attack()
@@ -109,10 +113,10 @@ class BattleSimulator(object):
 
     def write_battle_log(
         self,
-        attack_player: Player,
-        shield_player: Player,
-        attack_card: Card,
-        target_card: Card,
+        attack_player,
+        shield_player,
+        attack_card,
+        target_card,
     ):
         battle_log = str()
         battle_log += f"Attacking Card: {attack_card.get_name()}\n"
@@ -123,7 +127,7 @@ class BattleSimulator(object):
 
     def _update_minion_index(
         self,
-        player: Player,
+        player,
         index: int,
     ):
         index += 1
