@@ -1,14 +1,15 @@
 from ..Card import Card
 
+
 class RedWhelp(Card):
     def __init__(self):
         Card.__init__(self)
 
     def reset(self):
-        self.text = '기선 제압: 아군 용족만큼 무작위 적 하수인에게 피해를 줍니다.'
-        self.type = 'Dragon'
-        self.name = '새끼 붉은용'
-        self.name_eng = 'Red Whelp'
+        self.text = "기선 제압: 아군 용족만큼 무작위 적 하수인에게 피해를 줍니다."
+        self.type = "Dragon"
+        self.name = "새끼 붉은용"
+        self.name_eng = "Red Whelp"
         self.attack = 1
         self.health = 2
         self.tier = 1
@@ -25,4 +26,12 @@ class RedWhelp(Card):
         self.battle_cry = False
         self.available_in_shop = True
         self.death_rattle_list = self.set_death_rattle_list()
-        
+
+    def trigger_start_of_combat(self, mine, opponent):
+        attack = len(
+            [card for card in mine.get_live_card_list() if card.get_type() == "Dragon"]
+        )
+        if opponent.get_live_card_num() > 0:
+            target = opponent.get_live_card()
+            target.lose_health(attack, mine, opponent)
+            target.trigger_dead(opponent, mine)

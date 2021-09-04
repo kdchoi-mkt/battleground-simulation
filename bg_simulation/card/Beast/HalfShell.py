@@ -1,14 +1,15 @@
 from ..Card import Card
 
+
 class HalfShell(Card):
     def __init__(self):
         Card.__init__(self)
 
     def reset(self):
-        self.text = '도발'
-        self.type = 'Beast'
-        self.name = '등딱지거북'
-        self.name_eng = 'Half-Shell'
+        self.text = "도발"
+        self.type = "Beast"
+        self.name = "등딱지거북"
+        self.name_eng = "Half-Shell"
         self.attack = 2
         self.health = 3
         self.tier = 1
@@ -23,6 +24,5 @@ class HalfShell(Card):
         self.avenge_count = 0
         self.death_rattle = False
         self.battle_cry = False
-        self.available_in_shop = True
+        self.available_in_shop = False
         self.death_rattle_list = self.set_death_rattle_list()
-        
