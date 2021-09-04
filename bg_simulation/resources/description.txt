@@ -1,0 +1,2 @@
+The files in the resource folder are crawled by namu wiki, provides the structural information of Hearthstone Battleground Minion.
+For the detail information on TierX.txt, see "https://namu.wiki/w/하스스톤/카드일람/전장%20전용/X단계"
