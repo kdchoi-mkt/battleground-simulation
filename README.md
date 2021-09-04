@@ -15,7 +15,6 @@
 + 전장에서 일어나는 모든 움직임들은 Discrete Choice이기 때문에 유한한 경우의 수 내에서 일어납니다
 + 그러나 각자가 선택할 수 있는 환경이 너무 방대하기 때문에, simulation이라는 툴을 통해서 확률을 근사하고자 합니다
 
-# To Do
 
 # Git Description
 ## Board
@@ -37,6 +36,8 @@
 
 ## Resources
 + `Tier{X}`: 하스스톤 전장 X티어에 대한 HTML source입니다 (출처는 나무위키입니다)
+
+# To Do
 
 ## Automatically Generated Examplar
 1. 각 레벨, 각 티어에 따라서 생성될 수 있는 필드의 가짓수를 Automatically하게 만드는 것이 목표입니다
