@@ -43,12 +43,16 @@ class Card(object):
     def set_death_rattle_list(self) -> list:
         return list()
 
+    def when_this_attack(self, mine, opponent, targeted: Card):
+        """이 하수인이 공격할 때"""
+        pass
+
     def when_lose_ds(self, mine, opponent, targeted: Card):
         """아군 하수인이 천상의 보호막을 잃은 후에"""
         pass
 
     def when_targeted(self, mine, opponent, targeted: Card):
-        """아군 하수인이 공격 할 때"""
+        """아군 하수인이 공격 당할 때"""
         pass
 
     def when_dead(self, mine, opponent, dead: Card):
@@ -67,6 +71,7 @@ class Card(object):
 
     def battle(self, target, mine, opponent):
         opponent.trigger_targeted(mine, target)
+        self.when_this_attack(mine, opponent, target)
 
         target.lose_health(self, opponent, mine)
         self.lose_health(target, mine, opponent)
