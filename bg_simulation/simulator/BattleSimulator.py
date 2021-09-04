@@ -27,8 +27,10 @@ class BattleSimulator(object):
 
     def simulation(self):
         attacker_index, shielder_index = self.derive_player_role()
+        first_player = "User" if attacker_index == 0 else "Opponent"
         previous_attacked = [-1, -1]
         battle_log = str()
+
         while math.prod([player.get_live_card_num() for player in self.players]) > 0:
             attack_player, shield_player = (
                 self.players[attacker_index],
@@ -56,6 +58,7 @@ class BattleSimulator(object):
         result, damage = self.judge_who_win(self.players)
 
         self.simulation_json = self.construct_json(
+            FirstPlayer=first_player,
             Result=result,
             Damage=damage,
             BattleLog=battle_log,
