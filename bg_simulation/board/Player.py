@@ -57,6 +57,9 @@ class Player(object):
     def get_coin(self):
         return self.coin
 
+    def gain_coin(self, coin):
+        self.coin += coin
+
     def get_card_num(self):
         return len(self.card_list)
 

@@ -9,6 +9,12 @@ class Board(object):
         self.reroll_cost = 1
         self.hand = list()
 
+    def sell_item(self, index):
+        self.player.get_card_list().pop(index)
+        self.player.gain_coin(1)
+        if self.player.get_coin() > self.max_coin:
+            self.player.set_coin(self.max_coin)
+
     def upgrade_tier(self):
         if self.player.get_coin() >= self.shop.get_upgrade_cost():
             self.player.decrease_coin(self.shop.get_upgrade_cost())
