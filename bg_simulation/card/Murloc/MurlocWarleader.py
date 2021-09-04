@@ -1,14 +1,15 @@
 from ..Card import Card
 
+
 class MurlocWarleader(Card):
     def __init__(self):
         Card.__init__(self)
 
     def reset(self):
-        self.text = '내 다른 멀록들이 공격력을 +2 얻습니다.'
-        self.type = 'Murloc'
-        self.name = '멀록 전투대장'
-        self.name_eng = 'Murloc Warleader'
+        self.text = "내 다른 멀록들이 공격력을 +2 얻습니다."
+        self.type = "Murloc"
+        self.name = "멀록 전투대장"
+        self.name_eng = "Murloc Warleader"
         self.attack = 3
         self.health = 3
         self.tier = 2
@@ -25,4 +26,16 @@ class MurlocWarleader(Card):
         self.battle_cry = False
         self.available_in_shop = True
         self.death_rattle_list = self.set_death_rattle_list()
-        
+
+    def trigger_start_of_combat(self, mine, opponent):
+        for card in mine.get_live_card_list():
+            if card.get_type() == "Murloc":
+                card.gain_attack(2)
+
+    def _decrease_murloc_attack(self, mine, opponent):
+        for card in mine.get_live_card_list():
+            if card.get_type() == "Murloc":
+                card.gain_attack(-2)
+
+    def set_death_rattle_list(self) -> list:
+        return [self._decrease_murloc_attack]

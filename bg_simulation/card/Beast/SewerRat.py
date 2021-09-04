@@ -1,14 +1,16 @@
 from ..Card import Card
+from .HalfShell import HalfShell
+
 
 class SewerRat(Card):
     def __init__(self):
         Card.__init__(self)
 
     def reset(self):
-        self.text = '죽음의 메아리: 도발 능력이 있는 2/3 거북이를 소환합니다.'
-        self.type = 'Beast'
-        self.name = '하수도 쥐'
-        self.name_eng = 'Sewer Rat'
+        self.text = "죽음의 메아리: 도발 능력이 있는 2/3 거북이를 소환합니다."
+        self.type = "Beast"
+        self.name = "하수도 쥐"
+        self.name_eng = "Sewer Rat"
         self.attack = 3
         self.health = 2
         self.tier = 2
@@ -25,4 +27,9 @@ class SewerRat(Card):
         self.battle_cry = False
         self.available_in_shop = True
         self.death_rattle_list = self.set_death_rattle_list()
-        
+
+    def _summon_half_shell(self, mine, opponent):
+        self._summon_card(mine, HalfShell(), mine.get_card_list().index(self))
+
+    def set_death_rattle_list(self) -> list:
+        return [self._summon_half_shell]

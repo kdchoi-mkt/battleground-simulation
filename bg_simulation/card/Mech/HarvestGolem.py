@@ -7,10 +7,10 @@ class HarvestGolem(Card):
         Card.__init__(self)
 
     def reset(self):
-        self.text = '죽음의 메아리: 2/1 손상된 골렘을 소환합니다.'
-        self.type = 'Mech'
-        self.name = '허수아비골렘'
-        self.name_eng = 'Harvest Golem'
+        self.text = "죽음의 메아리: 2/1 손상된 골렘을 소환합니다."
+        self.type = "Mech"
+        self.name = "허수아비골렘"
+        self.name_eng = "Harvest Golem"
         self.attack = 2
         self.health = 3
         self.tier = 2
@@ -33,6 +33,4 @@ class HarvestGolem(Card):
         self._summon_card(mine, DamagedGolem(), index)
 
     def set_death_rattle_list(self) -> list:
-        return [
-            self._summon_damaged_golem
-        ]
+        return [self._summon_damaged_golem]
