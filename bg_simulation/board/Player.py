@@ -1,5 +1,13 @@
+from ..card import Card
+from typing import List
+
+
 class Player(object):
-    def __init__(self, card_list, health):
+    def __init__(
+        self,
+        card_list: List[Card],
+        health: int,
+    ):
         # Card List: Set of Card()
         self.card_list = card_list
         self.health = health
@@ -7,25 +15,28 @@ class Player(object):
         self.coin = 3
         self.tier = 1
 
-    def lose_health(self, damage):
+    def lose_health(
+        self,
+        damage: int,
+    ):
         self.health -= damage
 
         if self.health < 0:
             self.live = False
 
-    def trigger_lose_ds(self, opponent, targeted):
+    def trigger_lose_ds(self, opponent, targeted: Card):
         for card in self.get_live_card_list():
             card.when_lose_ds(self, opponent, targeted)
 
-    def trigger_targeted(self, opponent, targeted):
+    def trigger_targeted(self, opponent, targeted: Card):
         for card in self.get_live_card_list():
             card.when_targeted(self, opponent, targeted)
 
-    def trigger_dead(self, opponent, dead):
+    def trigger_dead(self, opponent, dead: Card):
         for card in self.get_live_card_list():
             card.when_dead(self, opponent, dead)
 
-    def trigger_summon(self, targeted):
+    def trigger_summon(self, targeted: Card):
         for card in self.get_live_card_list():
             card.when_summon(self, targeted)
 
