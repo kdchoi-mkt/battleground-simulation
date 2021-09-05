@@ -28,11 +28,11 @@ class MonstrousMacaw(Card):
         self.available_in_shop = True
         self.death_rattle_list = self.set_death_rattle_list()
 
-    def when_this_attack(self, mine: "Player", opponent: "Player", targeted: Card):
+    def after_this_attack(self, mine: "Player", opponent: "Player", targeted: Card):
         death_rattle_minion = [
             card
             for card in mine.get_live_card_list()
-            if len(card.death_rattle_list) > 0
+            if len(card.death_rattle_list) > 0 and card != self
         ]
         if len(death_rattle_minion) > 0:
             death_rattle = random.choice(death_rattle_minion)

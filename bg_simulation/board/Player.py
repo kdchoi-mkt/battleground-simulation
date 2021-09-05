@@ -38,6 +38,10 @@ class Player(object):
         for card in self.get_live_card_list():
             card.when_targeted(self, opponent, targeted)
 
+    def trigger_death_rattle(self, opponent: Player, targeted: "Card"):
+        for card in self.get_live_card_list():
+            card.when_trigger_death_rattle(self, opponent, targeted)
+
     def trigger_dead(self, opponent: Player, dead: "Card"):
         for card in self.get_live_card_list():
             card.when_dead(self, opponent, dead)

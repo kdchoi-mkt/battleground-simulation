@@ -27,5 +27,5 @@ class BaronRivendare(Card):
         self.available_in_shop = True
         self.death_rattle_list = self.set_death_rattle_list()
 
-    def when_dead(self, mine: "Player", opponent: "Player", dead: Card):
-        dead.trigger_death_rattle()
+    def when_trigger_death_rattle(self, mine: "Player", opponent: "Player", dead: Card):
+        dead.trigger_death_rattle(mine, opponent, if_first=False)

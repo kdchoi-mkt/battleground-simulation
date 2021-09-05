@@ -48,8 +48,18 @@ class Card(object):
     def set_death_rattle_list(self) -> list:
         return list()
 
+    def when_trigger_death_rattle(
+        self, mine: "Player", opponent: "Player", targeted: Card
+    ):
+        """아군 하수인의 죽음의 메아리가 발동된 이후에"""
+        pass
+
     def when_this_attack(self, mine: "Player", opponent: "Player", targeted: Card):
         """이 하수인이 공격할 때"""
+        pass
+
+    def after_this_attack(self, mine: "Player", opponent: "Player", targeted: Card):
+        """이 하수인이 공격한 후에"""
         pass
 
     def when_lose_ds(self, mine: "Player", opponent: "Player", targeted: Card):
@@ -80,6 +90,8 @@ class Card(object):
 
         target.lose_health(self, opponent, mine)
         self.lose_health(target, mine, opponent)
+
+        self.after_this_attack(mine, opponent, target)
 
         self.trigger_dead(mine, opponent)
         target.trigger_dead(opponent, mine)
@@ -196,9 +208,12 @@ class Card(object):
     def is_available_in_shop(self):
         return self.available_in_shop
 
-    def trigger_death_rattle(self, mine, opponent):
+    def trigger_death_rattle(self, mine: "Player", opponent: "Player", if_first = True):
         for death_rattle in self.death_rattle_list:
             death_rattle(mine, opponent)
+
+        if if_first == True:
+            mine.trigger_death_rattle(opponent, self)
 
     def trigger_before_battle_cry(self, mine: "Player", index: int):
         pass
