@@ -14,21 +14,23 @@ from .AnnihilanBattlemaster import AnnihilanBattlemaster
 from .InsatiableUrzul import InsatiableUrzul
 from .FamishedFelbat import FamishedFelbat
 from .ImpMama import ImpMama
+from .Voidwalker import Voidwalker
 
 minion_group = {
-	'IckyImp': IckyImp,
-	'Imp': Imp,
-	'ImpulsiveTrickster': ImpulsiveTrickster,
-	'NathrezimOverseer': NathrezimOverseer,
-	'Imprisoner': Imprisoner,
-	'SoulDevourer': SoulDevourer,
-	'Bigfernal': Bigfernal,
-	'RingMatron': RingMatron,
-	'FieryImp': FieryImp,
-	'Kathranatir': Kathranatir,
-	'Voidlord': Voidlord,
-	'AnnihilanBattlemaster': AnnihilanBattlemaster,
-	'InsatiableUrzul': InsatiableUrzul,
-	'FamishedFelbat': FamishedFelbat,
-	'ImpMama': ImpMama,
+    "IckyImp": IckyImp,
+    "Imp": Imp,
+    "ImpulsiveTrickster": ImpulsiveTrickster,
+    "NathrezimOverseer": NathrezimOverseer,
+    "Imprisoner": Imprisoner,
+    "SoulDevourer": SoulDevourer,
+    "Bigfernal": Bigfernal,
+    "RingMatron": RingMatron,
+    "FieryImp": FieryImp,
+    "Kathranatir": Kathranatir,
+    "Voidlord": Voidlord,
+    "AnnihilanBattlemaster": AnnihilanBattlemaster,
+    "InsatiableUrzul": InsatiableUrzul,
+    "FamishedFelbat": FamishedFelbat,
+    "ImpMama": ImpMama,
+    "Voidwalker": Voidwalker,
 }

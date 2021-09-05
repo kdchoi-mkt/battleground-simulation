@@ -27,7 +27,7 @@ class RabidSaurolisk(Card):
         self.available_in_shop = True
         self.death_rattle_list = self.set_death_rattle_list()
 
-    def when_summon(self, mine, targeted):
-        if targeted.has_death_rattle == True:
-            self.gain_attack(1)
-            self.gain_health(2)
+    # def when_summon(self, mine, targeted):
+    #     if targeted.has_death_rattle == True:
+    #         self.gain_attack(1)
+    #         self.gain_health(2)

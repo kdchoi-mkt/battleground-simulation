@@ -29,7 +29,6 @@ class Leapfrogger(Card):
         self.death_rattle_list = self.set_death_rattle_list()
 
     def _add_death_rattle(self, mine, opponent):
-
         beast_card = [
             card for card in mine.get_live_card_list() if card.get_type() == "Beast"
         ]
