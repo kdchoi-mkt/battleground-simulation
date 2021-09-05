@@ -22,7 +22,7 @@ class Voidwalker(Card):
         self.poison = False
         self.avenge = False
         self.avenge_count = 0
-        self.death_rattle = True
+        self.death_rattle = False
         self.battle_cry = False
         self.available_in_shop = False
         self.death_rattle_list = self.set_death_rattle_list()
