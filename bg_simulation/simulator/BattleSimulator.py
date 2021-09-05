@@ -1,19 +1,25 @@
 import random
 import math
+from typing import TYPE_CHECKING, Tuple
+from typing import List
+
+if TYPE_CHECKING:
+    from ..card import Card
+    from ..board import Player
 
 
 class BattleSimulator(object):
     def __init__(
         self,
-        mine,
-        opponent,
+        mine: "Player",
+        opponent: "Player",
     ):
         self.players = [mine, opponent]
         self.turn = 0
         self.battle_log = str()
         self.simulation_json = dict()
 
-    def derive_player_role(self):
+    def derive_player_role(self) -> Tuple[int, int]:
         if self.players[0].get_live_card_num() > self.players[1].get_live_card_num():
             return 0, 1
         elif self.players[1].get_live_card_num() > self.players[0].get_live_card_num():
@@ -26,7 +32,7 @@ class BattleSimulator(object):
         attacker_index, shielder_index = self.derive_player_role()
         first_player = "User" if attacker_index == 0 else "Opponent"
         previous_attacked = [-1, -1]
-        battle_log = str()
+        self.battle_log = str()
 
         self.players[attacker_index].trigger_start_of_combat(
             self.players[shielder_index]
@@ -50,9 +56,22 @@ class BattleSimulator(object):
             target_card = self.possible_target_to_attack(shield_player)
             attack_card.battle(target_card, attack_player, shield_player)
 
-            battle_log += self.write_battle_log(
+            self.battle_log += self.write_battle_log(
                 attack_player, shield_player, attack_card, target_card
             )
+
+            # 질풍인 경우에 바로 한 번 더 공격
+            if (
+                attack_card.is_windfury() == True
+                and attack_card.is_live()
+                and shield_player.get_live_card_num() > 0
+            ):
+                target_card = self.possible_target_to_attack(shield_player)
+                attack_card.battle(target_card, attack_player, shield_player)
+
+                self.battle_log += self.write_battle_log(
+                    attack_player, shield_player, attack_card, target_card
+                )
 
             attacker_index, shielder_index = shielder_index, attacker_index
             self.turn += 1
@@ -63,7 +82,7 @@ class BattleSimulator(object):
             FirstPlayer=first_player,
             Result=result,
             Damage=damage,
-            BattleLog=battle_log,
+            BattleLog=self.battle_log,
             UserCard=self.players[0].get_card_list(),
             OpponentCard=self.players[1].get_card_list(),
             Turn=self.turn,
@@ -73,7 +92,7 @@ class BattleSimulator(object):
     def possible_target_to_attack(
         self,
         shield_player,
-    ):
+    ) -> "Card":
         """도발 하수인이 있다면 도발 하수인을 우선적으로 공격함"""
         if shield_player.get_taunt_live_card_num() > 0:
             shield_minion = shield_player.get_live_taunt_card_list()
@@ -85,7 +104,7 @@ class BattleSimulator(object):
         self,
         attack_player,
         previous_index: int,
-    ):
+    ) -> Tuple["Card", int]:
         """공격권을 가지는 하수인 선택하기
         Attack[attack_person]은 공격을 할 수 있는 하수인을 의미
         이전에 공격한 하수인은 다시 공격할 수 없으며
@@ -102,8 +121,8 @@ class BattleSimulator(object):
 
     def judge_who_win(
         self,
-        players,
-    ):
+        players: List["Player"],
+    ) -> Tuple[str, int]:
         if players[0].get_live_card_num() > 0:
             return "Win", players[0].attack()
         elif players[1].get_live_card_num() > 0:
@@ -113,11 +132,11 @@ class BattleSimulator(object):
 
     def write_battle_log(
         self,
-        attack_player,
-        shield_player,
-        attack_card,
-        target_card,
-    ):
+        attack_player: "Player",
+        shield_player: "Player",
+        attack_card: "Card",
+        target_card: "Card",
+    ) -> str:
         battle_log = str()
         battle_log += f"Attacking Card: {attack_card.get_name()}\n"
         battle_log += f"Targeted Card: {target_card.get_name()}\n"
@@ -127,9 +146,9 @@ class BattleSimulator(object):
 
     def _update_minion_index(
         self,
-        player,
+        player: "Player",
         index: int,
-    ):
+    ) -> int:
         index += 1
         card_num = player.get_card_num()
 
