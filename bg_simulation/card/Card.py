@@ -1,5 +1,10 @@
 from __future__ import annotations
+from typing import TYPE_CHECKING, Union
+
 import random
+
+if TYPE_CHECKING:
+    from ..board import Player
 
 
 class Card(object):
@@ -43,23 +48,23 @@ class Card(object):
     def set_death_rattle_list(self) -> list:
         return list()
 
-    def when_this_attack(self, mine, opponent, targeted: Card):
+    def when_this_attack(self, mine: "Player", opponent: "Player", targeted: Card):
         """이 하수인이 공격할 때"""
         pass
 
-    def when_lose_ds(self, mine, opponent, targeted: Card):
+    def when_lose_ds(self, mine: "Player", opponent: "Player", targeted: Card):
         """아군 하수인이 천상의 보호막을 잃은 후에"""
         pass
 
-    def when_targeted(self, mine, opponent, targeted: Card):
+    def when_targeted(self, mine: "Player", opponent: "Player", targeted: Card):
         """아군 하수인이 공격 당할 때"""
         pass
 
-    def when_dead(self, mine, opponent, dead: Card):
+    def when_dead(self, mine: "Player", opponent: "Player", dead: Card):
         """아군 하수인이 죽은 후에"""
         pass
 
-    def when_summon(self, mine, targeted):
+    def when_summon(self, mine: "Player", targeted: Card):
         """아군을 소환한 후에"""
         pass
 
@@ -69,7 +74,7 @@ class Card(object):
     def get_name(self):
         return self.name
 
-    def battle(self, target, mine, opponent):
+    def battle(self, target: Card, mine: "Player", opponent: "Player"):
         opponent.trigger_targeted(mine, target)
         self.when_this_attack(mine, opponent, target)
 
@@ -79,7 +84,7 @@ class Card(object):
         self.trigger_dead(mine, opponent)
         target.trigger_dead(opponent, mine)
 
-    def trigger_dead(self, mine, opponent):
+    def trigger_dead(self, mine: "Player", opponent: "Player"):
         if self.live == False:
             self.trigger_death_rattle(mine, opponent)
             mine.trigger_dead(opponent, self)
@@ -89,7 +94,9 @@ class Card(object):
                 self.health = 1
                 self.reborn = False
 
-    def lose_health(self, attacker, mine, opponent):
+    def lose_health(
+        self, attacker: Union[Card, int], mine: "Player", opponent: "Player"
+    ):
         if self.divine_shield == True:
             self.divine_shield = False
             mine.trigger_lose_ds(opponent, self)
@@ -107,7 +114,7 @@ class Card(object):
                 if self.frenzy == True:
                     self.trigger_frenzy(self)
 
-    def gain_health(self, health):
+    def gain_health(self, health: int):
         self.health += health
 
     def trigger_frenzy(self):
@@ -193,13 +200,13 @@ class Card(object):
         for death_rattle in self.death_rattle_list:
             death_rattle(mine, opponent)
 
-    def trigger_before_battle_cry(self, mine, index):
+    def trigger_before_battle_cry(self, mine: "Player", index: int):
         pass
 
-    def trigger_after_battle_cry(self, mine):
+    def trigger_after_battle_cry(self, mine: "Player"):
         pass
 
-    def trigger_start_of_combat(self, mine, opponent):
+    def trigger_start_of_combat(self, mine: "Player", opponent: "Player"):
         """기선 제압: 전투 시작 전에 한 번 효과 발동"""
         pass
 
@@ -212,7 +219,7 @@ class Card(object):
     def _randomly_choose(self, size):
         return random.randint(0, size - 1)
 
-    def _summon_card(self, mine, card, index):
+    def _summon_card(self, mine: "Player", card: Card, index: int):
         if mine.get_live_card_num() < 7:
             mine.get_card_list().insert(index + 1, card)
             mine.trigger_summon(card)

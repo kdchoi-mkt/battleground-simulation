@@ -1,4 +1,5 @@
 from ..Card import Card
+import random 
 
 class MenagerieJug(Card):
     def __init__(self):
@@ -26,3 +27,19 @@ class MenagerieJug(Card):
         self.available_in_shop = True
         self.death_rattle_list = self.set_death_rattle_list()
         
+    def trigger_before_battle_cry(self, mine, index):
+        card_list = [card for card in mine.get_card_list()]
+        random.shuffle(card_list)
+        type_dict = dict()
+
+        for card in card_list:
+            if card.get_type() == "Neutral":
+                continue
+
+            type_dict[card.get_type()] = card
+            if len(type_dict) == 3:
+                break
+
+        for card in type_dict.values():
+            card.gain_health(2)
+            card.gain_attack(2)

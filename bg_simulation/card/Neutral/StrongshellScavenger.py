@@ -1,14 +1,15 @@
 from ..Card import Card
 
+
 class StrongshellScavenger(Card):
     def __init__(self):
         Card.__init__(self)
 
     def reset(self):
-        self.text = '전투의 함성: 내 도발 하수인들에게 +2/+2를 부여합니다.'
-        self.type = 'Neutral'
-        self.name = '튼튼껍질 청소부'
-        self.name_eng = 'Strongshell Scavenger'
+        self.text = "전투의 함성: 내 도발 하수인들에게 +2/+2를 부여합니다."
+        self.type = "Neutral"
+        self.name = "튼튼껍질 청소부"
+        self.name_eng = "Strongshell Scavenger"
         self.attack = 2
         self.health = 3
         self.tier = 5
@@ -25,4 +26,9 @@ class StrongshellScavenger(Card):
         self.battle_cry = True
         self.available_in_shop = True
         self.death_rattle_list = self.set_death_rattle_list()
-        
+
+    def trigger_before_battle_cry(self, mine: "Player", index: int):
+        for card in mine.get_card_list():
+            if card.is_taunt() == True:
+                card.gain_health(2)
+                card.gain_attack(2)

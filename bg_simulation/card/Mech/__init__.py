@@ -1,6 +1,5 @@
 from .Pupbot import Pupbot
 from .MicroMummy import MicroMummy
-from .EvolvingChromawing import EvolvingChromawing
 from .MetaltoothLeaper import MetaltoothLeaper
 from .KaboomBot import KaboomBot
 from .HarvestGolem import HarvestGolem
@@ -20,23 +19,22 @@ from .OmegaBuster import OmegaBuster
 from .Microbot import Microbot
 
 minion_group = {
-	'Pupbot': Pupbot,
-	'MicroMummy': MicroMummy,
-	'EvolvingChromawing': EvolvingChromawing,
-	'MetaltoothLeaper': MetaltoothLeaper,
-	'KaboomBot': KaboomBot,
-	'HarvestGolem': HarvestGolem,
-	'DamagedGolem': DamagedGolem,
-	'ScrewjankClunker': ScrewjankClunker,
-	'DeflectoBot': DeflectoBot,
-	'ReplicatingMenace': ReplicatingMenace,
-	'Microbot': Microbot,
-	'MechanoTank': MechanoTank,
-	'MechanoEgg': MechanoEgg,
-	'Robosaur': Robosaur,
-	'GreaseBot': GreaseBot,
-	'AnnoyoModule': AnnoyoModule,
-	'HolyMecherel': HolyMecherel,
-	'FoeReaper4000': FoeReaper4000,
-	'OmegaBuster': OmegaBuster,
+    "Pupbot": Pupbot,
+    "MicroMummy": MicroMummy,
+    "MetaltoothLeaper": MetaltoothLeaper,
+    "KaboomBot": KaboomBot,
+    "HarvestGolem": HarvestGolem,
+    "DamagedGolem": DamagedGolem,
+    "ScrewjankClunker": ScrewjankClunker,
+    "DeflectoBot": DeflectoBot,
+    "ReplicatingMenace": ReplicatingMenace,
+    "Microbot": Microbot,
+    "MechanoTank": MechanoTank,
+    "MechanoEgg": MechanoEgg,
+    "Robosaur": Robosaur,
+    "GreaseBot": GreaseBot,
+    "AnnoyoModule": AnnoyoModule,
+    "HolyMecherel": HolyMecherel,
+    "FoeReaper4000": FoeReaper4000,
+    "OmegaBuster": OmegaBuster,
 }

@@ -1,14 +1,15 @@
 from ..Card import Card
 
+
 class ChampionofYShaarj(Card):
     def __init__(self):
         Card.__init__(self)
 
     def reset(self):
-        self.text = '아군 도발 하수인이 공격당할 때마다 영구히 +1/+1을 얻습니다.'
-        self.type = 'Neutral'
-        self.name = '이샤라즈의 용사'
-        self.name_eng = 'Champion of Y’Shaarj'
+        self.text = "아군 도발 하수인이 공격당할 때마다 영구히 +1/+1을 얻습니다."
+        self.type = "Neutral"
+        self.name = "이샤라즈의 용사"
+        self.name_eng = "Champion of Y’Shaarj"
         self.attack = 4
         self.health = 4
         self.tier = 4
@@ -25,4 +26,8 @@ class ChampionofYShaarj(Card):
         self.battle_cry = False
         self.available_in_shop = True
         self.death_rattle_list = self.set_death_rattle_list()
-        
+
+    def when_targeted(self, mine: "Player", opponent: "Player", targeted: Card):
+        if targeted.is_taunt() == True:
+            self.gain_health(1)
+            self.gain_attack(1)

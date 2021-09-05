@@ -25,4 +25,13 @@ class DefenderofArgus(Card):
         self.battle_cry = True
         self.available_in_shop = True
         self.death_rattle_list = self.set_death_rattle_list()
-        
+    
+    def trigger_before_battle_cry(self, mine: "Player", index: int):
+        for ind in [index, index + 1]:
+            try:
+                target_card = mine.get_card(ind)
+                target_card.set_taunt(True)
+                target_card.gain_health(1)
+                target_card.gain_attack(1)
+            except:
+                pass

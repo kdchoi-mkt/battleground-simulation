@@ -10,18 +10,20 @@ from .PrestorsPyrospawn import PrestorsPyrospawn
 from .Murozond import Murozond
 from .RazorgoreTheUntamed import RazorgoreTheUntamed
 from .KalecgosArcaneAspect import KalecgosArcaneAspect
+from .EvolvingChromawing import EvolvingChromawing
 
 minion_group = {
-	'RedWhelp': RedWhelp,
-	'GlyphGuardian': GlyphGuardian,
-	'BronzeWarden': BronzeWarden,
-	'Tarecgosa': Tarecgosa,
-	'TwilightEmissary': TwilightEmissary,
-	'PrizedPromoDrake': PrizedPromoDrake,
-	'DrakonidEnforcer': DrakonidEnforcer,
-	'CobaltScalebane': CobaltScalebane,
-	'PrestorsPyrospawn': PrestorsPyrospawn,
-	'Murozond': Murozond,
-	'RazorgoreTheUntamed': RazorgoreTheUntamed,
-	'KalecgosArcaneAspect': KalecgosArcaneAspect,
+    "RedWhelp": RedWhelp,
+    "GlyphGuardian": GlyphGuardian,
+    "BronzeWarden": BronzeWarden,
+    "Tarecgosa": Tarecgosa,
+    "EvolvingChromawing": EvolvingChromawing,
+    "TwilightEmissary": TwilightEmissary,
+    "PrizedPromoDrake": PrizedPromoDrake,
+    "DrakonidEnforcer": DrakonidEnforcer,
+    "CobaltScalebane": CobaltScalebane,
+    "PrestorsPyrospawn": PrestorsPyrospawn,
+    "Murozond": Murozond,
+    "RazorgoreTheUntamed": RazorgoreTheUntamed,
+    "KalecgosArcaneAspect": KalecgosArcaneAspect,
 }

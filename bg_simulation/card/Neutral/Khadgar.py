@@ -1,14 +1,16 @@
 from ..Card import Card
+import copy
+
 
 class Khadgar(Card):
     def __init__(self):
         Card.__init__(self)
 
     def reset(self):
-        self.text = '하수인을 소환하는 내 카드들이 하수인을 두 배로 소환합니다.'
-        self.type = 'Neutral'
-        self.name = '카드가'
-        self.name_eng = 'Khadgar'
+        self.text = "하수인을 소환하는 내 카드들이 하수인을 두 배로 소환합니다."
+        self.type = "Neutral"
+        self.name = "카드가"
+        self.name_eng = "Khadgar"
         self.attack = 2
         self.health = 2
         self.tier = 3
@@ -25,4 +27,7 @@ class Khadgar(Card):
         self.battle_cry = False
         self.available_in_shop = True
         self.death_rattle_list = self.set_death_rattle_list()
-        
+
+    def when_summon(self, mine: "Player", targeted: Card):
+        if mine.get_live_card_num() < 7:
+            mine.get_card_list().insert(mine.get_card_list().index(targeted) + 1, copy.deepcopy(targeted))
