@@ -36,7 +36,8 @@ class Leapfrogger(Card):
             beast = random.choice(beast_card)
             beast.gain_health(2)
             beast.gain_attack(2)
-            beast.death_rattle_list.append(self._add_death_rattle)
+            if len(beast.death_rattle_list) < 500:
+                beast.death_rattle_list.append(self._add_death_rattle)
 
     def set_death_rattle_list(self) -> list:
         return [self._add_death_rattle]
